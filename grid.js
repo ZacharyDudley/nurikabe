@@ -1,14 +1,19 @@
-const createGame = (width, height) => {
+const createGame = (game) => {
 
   let gameBoard = document.getElementById('board')
   let grid = document.createElement('tbody')
   let tableHTML = ''
 
-  for (var heightIndex = height - 1; heightIndex >= 0; heightIndex--) {
+  for (var heightIndex = game.height - 1; heightIndex >= 0; heightIndex--) {
     tableHTML += `<tr id=${heightIndex}>`
 
-    for (var widthIndex = 0; widthIndex < width; widthIndex++) {
-      tableHTML += `<td id="${widthIndex}-${heightIndex}" data-state="blank" data-number="0"></td>`
+    for (var widthIndex = 0; widthIndex < game.width; widthIndex++) {
+      if (game.hasOwnProperty(`${widthIndex}-${heightIndex}`)) {
+        let spaceNumber = game[`${widthIndex}-${heightIndex}`]
+        tableHTML += `<td id="${widthIndex}-${heightIndex}" data-state="number" data-number=${spaceNumber}></td>`
+      } else {
+        tableHTML += `<td id="${widthIndex}-${heightIndex}" data-state="blank" data-number="0"></td>`
+      }
     }
 
     tableHTML += '</tr>'
@@ -44,10 +49,14 @@ const createGame = (width, height) => {
     }
   }
 
-  for (var hi = 0; hi < height; hi++) {
-    for (var wi = 0; wi < width; wi++) {
+  for (var hi = 0; hi < game.height; hi++) {
+    for (var wi = 0; wi < game.width; wi++) {
       let space = document.getElementById(`${wi}-${hi}`)
       space.addEventListener('click', handleClick)
+
+      if (space.dataset.number != 0) {
+        space.textContent = space.dataset.number
+      }
     }
   }
 }
@@ -55,19 +64,14 @@ const createGame = (width, height) => {
 let testBoard = {
   width: 6,
   height: 8,
-  numberSpaces: [
-    { coords: '0-3', number: 5 },
-    { coords: '2-2', number: 2 },
-    { coords: '5,1', number: 3 },
-    { coords: '4,2', number: 1 },
-    { coords: '1,6', number: 1 },
-    { coords: '2,7', number: 5 },
-    { coords: '3,6', number: 2 },
-    { coords: '5,4', number: 1 },
-  ]
+  '0-3': 5,
+  '2-2': 2,
+  '5-1': 3,
+  '4-2': 1,
+  '1-6': 1,
+  '2-7': 5,
+  '3-6': 2,
+  '5-4': 1,
 }
 
-let width = 10
-let height = 10
-
-createGame(width, height)
+createGame(testBoard)
