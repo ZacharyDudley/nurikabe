@@ -1,0 +1,31 @@
+#board {
+  padding: 1rem;
+}
+
+/* tbody {
+  border-width: thick;
+  border-color: black;
+  border-style: solid;
+} */
+
+#board td {
+  width: 3rem;
+  height: 3rem;
+  border-width: thin;
+  border-color: black;
+  border-style: solid;
+}
+
+td.blank {
+  background-color: white;
+}
+
+td.dead {
+  background-color: black;
+}
+
+td.alive {
+  background-color: teal;
+}
+
+
